@@ -1,0 +1,32 @@
+name: Prepare new release
+
+on:
+  workflow_dispatch:
+    inputs:
+      serverBump:
+        description: "Bump server version"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - minor
+          - patch
+      mobileBump:
+        description: "Bump mobile build number"
+        required: false
+        type: boolean
+
+jobs:
+  bump_version:
+    runs-on: ubuntu-latest
+    
+    outputs:
+      ref: ${{ steps.push-tag.outputs.commit_long_sha }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Bump version
+        run: misc/bump.sh -s "${{ inputs.serverBump }}" -m "${{ inputs.mobileBump }}"
