@@ -25,7 +25,7 @@ while getopts 's:m:' flag; do
   esac
 done
 
-CURRENT_SERVER=$(cat package.json | jq -r '.version')
+CURRENT_SERVER=$(cat misc/package.json | jq -r '.version')
 MAJOR=$(echo $CURRENT_SERVER | cut -d '.' -f1)
 MINOR=$(echo $CURRENT_SERVER | cut -d '.' -f2)
 PATCH=$(echo $CURRENT_SERVER | cut -d '.' -f3)
@@ -54,7 +54,7 @@ if [ "$CURRENT_SERVER" != "$NEXT_SERVER" ]; then
 
   echo "Pumping Server: $CURRENT_SERVER => $NEXT_SERVER"
 
-  sed -i "s/^  \"version\": \"$CURRENT_SERVER\",$/  \"version\": \"$NEXT_SERVER\",/" package.json
+  sed -i "s/^  \"version\": \"$CURRENT_SERVER\",$/  \"version\": \"$NEXT_SERVER\",/" misc/package.json
 
 fi
 
